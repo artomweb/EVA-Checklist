@@ -2,8 +2,9 @@
 
 A template for creating NASA Gemini (1966) style checklists. See comparison with original below:
 
-<img src="thumbnail.png" width="205">
-<img src="NASM-A19850125000_PS01.jpg" width="250">
+|               Template                |                    NASA Gemini                     |
+| :-----------------------------------: | :------------------------------------------------: |
+| <img src="thumbnail.png" width="205"> | <img src="NASM-A19850125000_PS01.jpg" width="250"> |
 
 [NASA Image Source](https://airandspace.si.edu/collection-objects/checklist-card-umbilical-eva-gemini-10/nasm_A19850125000)
 
