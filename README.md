@@ -1,6 +1,6 @@
 # EVA Checklist
 
-A template for creating NASA Gemini (1966) style checklists. See comparison with original below:
+A typst template for creating NASA Gemini (1966) style checklists. See comparison with original below:
 
 |               Template                |                    NASA Gemini                     |
 | :-----------------------------------: | :------------------------------------------------: |
