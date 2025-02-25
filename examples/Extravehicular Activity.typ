@@ -1,10 +1,11 @@
 #import "../lib.typ": *
 
-#show: checklist.with()
+#show: checklist
 
 #sequence[
   #withCrew("P")[
-    #step[Pawls "L-L" (Locked), sawtooth - open]
+    #step[Pawls "L-L" (Locked),]
+    #step[sawtooth - open]
   ]
   #withCrew("B")[
     #step[Feedout Umbilical]
@@ -33,6 +34,7 @@
     #step[Remove S-10]
     #step[Translate to S/C]
     #step(atTime: "30:00")[Hand S-10 to CMD Pilot]
+    #v(2mm)
     #step[HHMU Evaluation: 30" from]
     #subStep[S/C stabilize]
     #subStep[YAW 90#sym.degree L & R]
@@ -48,6 +50,6 @@
 #sequence(title: "Ingress")[
   #withCrew("P")[
     #step[Turn N#sub[2] valve - off]
-    #step[Bleed out N#sub[2] & unplug HHMU N#sub[2] fiting]
+    #step[Bleed out N#sub[2] & unplug HHMU N#sub[2] fitting]
   ]
 ]

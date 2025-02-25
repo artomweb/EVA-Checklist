@@ -12,8 +12,8 @@
   t.update(withTime)
   if title != "" {
     upper[#underline()[#title:]]
+    v(4mm)
   }
-  v(1mm)
   body
 }
 
@@ -31,8 +31,7 @@
 
     let content = grid(
       inset: inset,
-      columns: if t.get() { (2em, 1fr, time-width) } else { (2em, 1fr, 0em) }, // Fixed time column width
-      column-gutter: 0.5em, // Consistent spacing between columns
+      columns: if t.get() { (2em, 1fr, time-width) } else { (2em, 1fr, 1em) },
       if step-num == 1 {
         let crew-member = s.get()
         crew-member
@@ -42,13 +41,12 @@
         counter("globalTimeBadge").step()
         counter("localTimeBadge").step()
         align(right)[
-          // Right-align time for consistency
           #box(width: time-width)[#underline()[#atTime] #label(("timeBadge" + str(globalTimeBadge + 1)))]
         ]
       },
     )
 
-    block(width: 100%, content) // Always full width
+    content
   }
 
   context {
@@ -61,9 +59,9 @@
 
         if currPos.page == pos.page {
           place(top)[
-            #line(start: (pos.x + 10.8pt, pos.y + 7pt), end: (currPos.x + 10.8pt, currPos.y - 10pt))
+            #line(start: (pos.x + 8.7pt, pos.y + 7pt), end: (currPos.x + 8.7pt, currPos.y - 10pt))
           ]
-          place(top, dx: currPos.x + 8.8pt, dy: currPos.y - 11pt)[
+          place(top, dx: currPos.x + 6.7pt, dy: currPos.y - 11pt)[
             #curve(
               stroke: black,
               fill: black,
@@ -108,7 +106,7 @@
   set text(font: ("Liberation Mono", "Cascadia Mono"))
   set sub(size: 1em, typographic: false, baseline: .4em)
   set underline(offset: 1mm, stroke: 0.08em)
-  set par(spacing: 0.7em)
+  set par(spacing: 0.6em)
   counter("globalTimeBadge").update(0)
   body
 }

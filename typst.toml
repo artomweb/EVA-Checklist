@@ -5,8 +5,8 @@ entrypoint = "lib.typ"
 authors = ["Archie Webster <https://github.com/artomweb>"]
 license = "MIT"
 description = "A template for creating NASA Gemini (1966) style checklists."
-repository = "https://github.com/artomweb/Quick-Sip-Typst-Template"
-keywords = ["QRH", "aviation", "checklist"]
+repository = "https://github.com/artomweb/EVA-Checklist.git"
+keywords = ["NASA", "aviation", "checklist"]
 categories = ["utility"]
 
 [template]
