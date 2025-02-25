@@ -26,7 +26,7 @@ A Typst template for creating NASA Gemini (1966) style checklists. See compariso
 See `examples/` for help.
 All sequence titles and steps have forced capitalisation.
 
-## Sequence
+### Sequence
 
 Starts a new sequence, the title and time axis are optional.
 
@@ -42,7 +42,7 @@ Starts a new sequence, the title and time axis are optional.
 ]
 ```
 
-## Crew
+### Crew
 
 Specifies the crew letter in the left hand margin.
 
@@ -52,7 +52,7 @@ Specifies the crew letter in the left hand margin.
  ]
 ```
 
-## Step
+### Step
 
 Specifies an individual step. Optional `atTime` parameter if using time axis.
 
@@ -61,7 +61,7 @@ Specifies an individual step. Optional `atTime` parameter if using time axis.
 #step(atTime: "05:00")[Raise handrail]
 ```
 
-# Sub step
+### Sub step
 
 A step with a left indentation. Optional `atTime` parameter if using time axis.
 
