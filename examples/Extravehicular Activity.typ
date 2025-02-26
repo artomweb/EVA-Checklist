@@ -2,7 +2,7 @@
 
 #show: checklist
 
-#sequence[
+#sequence(withNumbers: true)[
   #withCrew("P")[
     #step[Pawls "L-L" (Locked),]
     #step[sawtooth - open]

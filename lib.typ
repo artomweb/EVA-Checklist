@@ -1,15 +1,20 @@
-#let s = state("Crew Member", "P")
+#let c = state("Crew Member", "P")
 #let t = state("With Time?", false)
+#let n = state("With Numbers?", false)
 
-#let sequence(title: "", withTime: false, body) = context {
+#let sequence(title: "", withTime: false, withNumbers: false, body) = context {
   let step-num = counter("step").get().at(0)
   if step-num > 0 {
+    // If there was a sequence before this, give it some space
     v(3mm)
   }
   counter("step").update(0)
+  counter("sequenceStep").update(1)
+  counter("subStep").update(1)
   counter("crewSection").update(0)
   counter("localTimeBadge").update(0)
   t.update(withTime)
+  n.update(withNumbers)
   if title != "" {
     upper[#underline()[#title:]]
     v(4mm)
@@ -17,10 +22,18 @@
   body
 }
 
-#let step-component(atTime: "00:00", body, inset: 0pt) = {
+#let step-component(atTime: "00:00", isSubstep: false, body) = {
   context {
     counter("step").step()
+    if not isSubstep {
+      counter("sequenceStep").step()
+      counter("subStep").update(1) // Reset substep counter for each main step
+    } else {
+      counter("subStep").step() // Increment substep counter for substeps
+    }
     let step-num = counter("step").get().at(0)
+    let seq-step-num = counter("sequenceStep").get().at(0)
+    let sub-step-num = counter("subStep").get().at(0)
     let section-num = counter("crewSection").get().at(0)
     let globalTimeBadge = counter("globalTimeBadge").get().at(0)
     let time-width = 2.8em // Fixed width for time column
@@ -28,25 +41,59 @@
     if step-num == 1 and section-num != 1 {
       v(2mm)
     }
-
-    let content = grid(
-      inset: inset,
-      columns: if t.get() { (2em, 1fr, time-width) } else { (2em, 1fr, 1em) },
-      if step-num == 1 {
-        let crew-member = s.get()
-        crew-member
-      },
-      par(hanging-indent: 1.2em, upper[#body]),
-      if t.get() and (step-num == 1 and section-num == 1 or atTime != "00:00") {
-        counter("globalTimeBadge").step()
-        counter("localTimeBadge").step()
-        align(right)[
-          #box(width: time-width)[#underline()[#atTime] #label(("timeBadge" + str(globalTimeBadge + 1)))]
-        ]
-      },
-    )
-
-    content
+    // Must be duplicated as Typst doesn't support conditional cell content
+    if n.get() {
+      grid(
+        // stroke: 2pt,
+        inset: if isSubstep { (left: 1.2em) } else { 0pt },
+        columns: if t.get() {
+          (1em, 1.4em, 1fr, time-width)
+        } else {
+          (1em, 1em, 1fr)
+        },
+        column-gutter: 0.9em,
+        if step-num == 1 {
+          let crew-member = c.get()
+          crew-member
+        },
+        if not isSubstep {
+          align(right)[#box(inset: (right: 5pt))[#text[#str(seq-step-num).]]]
+        } else {
+          box(inset: (left: 1.5em))[#align(right)[#enum(numbering: "a.", enum.item(sub-step-num)[])]]
+        },
+        par(hanging-indent: 1.2em)[ #upper[#body]],
+        if t.get() and (step-num == 1 and section-num == 1 or atTime != "00:00") {
+          counter("globalTimeBadge").step()
+          counter("localTimeBadge").step()
+          align(right)[
+            #box(width: time-width)[#underline()[#atTime] #label(("timeBadge" + str(globalTimeBadge + 1)))]
+          ]
+        },
+      )
+    } else {
+      grid(
+        // stroke: 2pt,
+        inset: if isSubstep { (left: 1.2em) } else { 0pt },
+        columns: if t.get() {
+          (1em, 1fr, time-width)
+        } else {
+          (1em, 1fr)
+        },
+        column-gutter: 0.9em,
+        if step-num == 1 {
+          let crew-member = c.get()
+          crew-member
+        },
+        par(hanging-indent: 1.2em)[ #upper[#body]],
+        if t.get() and (step-num == 1 and section-num == 1 or atTime != "00:00") {
+          counter("globalTimeBadge").step()
+          counter("localTimeBadge").step()
+          align(right)[
+            #box(width: time-width)[#underline()[#atTime] #label(("timeBadge" + str(globalTimeBadge + 1)))]
+          ]
+        },
+      )
+    }
   }
 
   context {
@@ -78,21 +125,17 @@
 }
 
 #let step(atTime: "00:00", body) = {
-  step-component(atTime: atTime, body)
+  step-component(atTime: atTime, body, isSubstep: false)
 }
 
 #let subStep(atTime: "00:00", body) = {
-  step-component(atTime: atTime, inset: (left: 1.2em), body)
-}
-
-#let atTime(thisTime) = {
-  thisTime
+  step-component(atTime: atTime, body, isSubstep: true)
 }
 
 #let withCrew(crewMember, body) = {
   counter("step").update(1)
   counter("crewSection").step()
-  s.update(crewMember)
+  c.update(crewMember)
   body
 }
 
