@@ -2,7 +2,7 @@
 
 #show: checklist
 
-#sequence(withNumbers: true)[
+#sequence[
   #withCrew("P")[
     #step[Pawls "L-L" (Locked),]
     #step[sawtooth - open]
@@ -35,8 +35,7 @@
     #step[Translate to S/C]
     #step(atTime: "30:00")[Hand S-10 to CMD Pilot]
     #v(2mm)
-    #step[HHMU Evaluation: 30" from]
-    #subStep[S/C stabilize]
+    #step[HHMU Evaluation: 30" from S/C stabilize]
     #subStep[YAW 90#sym.degree L & R]
     #subStep(atTime: "40:00")[Pitch 45#sym.degree #sym.arrow.t&#sym.arrow.b]
     #subStep[Pilot Pickup]

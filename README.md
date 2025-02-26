@@ -15,6 +15,7 @@ A Typst template for creating NASA Gemini (1966) style checklists. See compariso
 - Crew identifier (Pilot, copilot, both etc.)
 - Step
 - Sub Step
+- Numbered steps as seen in other Gemini checklists such as [gemini-5](https://www.thespacecollective.com/complete-gemini-5-flown-checklist)
 
 ## Start with
 
@@ -38,6 +39,10 @@ Starts a new sequence, the title and time axis are optional.
 ]
 // With an optional time axis
 #sequence(title: "Eva Sequence", withTime: true)[
+  // rest of sequence
+]
+// With optional numbered steps.
+#sequence(title: "Eva Sequence", withNumbers: true)[
   // rest of sequence
 ]
 ```

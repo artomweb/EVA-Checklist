@@ -41,7 +41,7 @@
     if step-num == 1 and section-num != 1 {
       v(2mm)
     }
-    // Must be duplicated as Typst doesn't support conditional cell content
+    // Must be duplicated as Typst doesn't support conditional cell content for second cell?
     if n.get() {
       grid(
         // stroke: 2pt,
@@ -75,9 +75,9 @@
         // stroke: 2pt,
         inset: if isSubstep { (left: 1.2em) } else { 0pt },
         columns: if t.get() {
-          (1em, 1fr, time-width)
+          (0.6em, 1fr, time-width)
         } else {
-          (1em, 1fr)
+          (0.6em, 1fr)
         },
         column-gutter: 0.9em,
         if step-num == 1 {
