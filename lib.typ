@@ -41,59 +41,49 @@
     if step-num == 1 and section-num != 1 {
       v(2mm)
     }
-    // Must be duplicated as Typst doesn't support conditional cell content for second cell?
-    if n.get() {
-      grid(
-        // stroke: 2pt,
-        inset: if isSubstep { (left: 1.2em) } else { 0pt },
-        columns: if t.get() {
+
+    grid(
+      inset: if isSubstep { (left: 1.2em) } else { 0pt },
+      columns: if t.get() {
+        if n.get() {
           (1em, 1.4em, 1fr, time-width)
         } else {
+          (1em, 1fr, time-width)
+        }
+      } else {
+        if n.get() {
           (1em, 1em, 1fr)
-        },
-        column-gutter: 0.9em,
-        if step-num == 1 {
-          let crew-member = c.get()
-          crew-member
-        },
-        if not isSubstep {
-          align(right)[#box(inset: (right: 5pt))[#text[#str(seq-step-num).]]]
         } else {
-          box(inset: (left: 1.5em))[#align(right)[#enum(numbering: "a.", enum.item(sub-step-num)[])]]
-        },
-        par(hanging-indent: 1.2em)[ #upper[#body]],
-        if t.get() and (step-num == 1 and section-num == 1 or atTime != "00:00") {
-          counter("globalTimeBadge").step()
-          counter("localTimeBadge").step()
-          align(right)[
-            #box(width: time-width)[#underline()[#atTime] #label(("timeBadge" + str(globalTimeBadge + 1)))]
-          ]
-        },
-      )
-    } else {
-      grid(
-        // stroke: 2pt,
-        inset: if isSubstep { (left: 1.2em) } else { 0pt },
-        columns: if t.get() {
-          (0.6em, 1fr, time-width)
-        } else {
-          (0.6em, 1fr)
-        },
-        column-gutter: 0.9em,
-        if step-num == 1 {
-          let crew-member = c.get()
-          crew-member
-        },
-        par(hanging-indent: 1.2em)[ #upper[#body]],
-        if t.get() and (step-num == 1 and section-num == 1 or atTime != "00:00") {
-          counter("globalTimeBadge").step()
-          counter("localTimeBadge").step()
-          align(right)[
-            #box(width: time-width)[#underline()[#atTime] #label(("timeBadge" + str(globalTimeBadge + 1)))]
-          ]
-        },
-      )
-    }
+          (1em, 1fr)
+        }
+      },
+      column-gutter: 0.9em,
+      // Column 1: Crew member (always present, conditionally populated)
+      if step-num == 1 {
+        let crew-member = c.get()
+        crew-member
+      },
+      // Column 2: Step number (conditional based on n.get())
+      ..if n.get() {
+        (
+          if not isSubstep {
+            align(right)[#box(inset: (right: 5pt))[#text[#str(seq-step-num).]]]
+          } else {
+            box(inset: (left: 1.5em))[#align(right)[#enum(numbering: "a.", enum.item(sub-step-num)[])]]
+          },
+        )
+      },
+      // Column 3: Body text (always present)
+      par(hanging-indent: 1.2em)[#upper[#body]],
+      // Column 4: Time badge (conditional based on t.get())
+      if t.get() and (step-num == 1 and section-num == 1 or atTime != "00:00") {
+        counter("globalTimeBadge").step()
+        counter("localTimeBadge").step()
+        align(right)[
+          #box(width: time-width)[#underline()[#atTime] #label(("timeBadge" + str(globalTimeBadge + 1)))]
+        ]
+      },
+    )
   }
 
   context {
